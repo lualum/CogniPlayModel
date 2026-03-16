@@ -1,196 +1,78 @@
-# CogniPlay: Multi-Modal Cognitive Decline Detection
+# CogniPlay: Multi-Modal Cognitive Behavior Classification
 
-CogniPlay is a comprehensive platform for detecting cognitive decline through multiple data modalities: speech analysis, clock drawing tests, and conversational language patterns. The system combines deep learning models to provide early detection of dementia and cognitive impairment.
+CogniPlay is a comprehensive platform for classifying cognitive behavior through multiple data modalities: speech analysis, clock drawing tests, and conversational language patterns. The system combines deep learning models to provide early classification of dementia and cognitive impairment.
 
 ## Overview
 
-This repository contains three independent detection models:
+This repository contains three independent classification models:
 
-1. **Speech Analysis Model** - Detects cognitive decline from audio recordings using Wav2Vec2
-2. **Clock Drawing Test Model** - Analyzes hand-drawn clock images using CNN
-3. **Conversational Language Model** - Evaluates speech transcripts using hierarchical LSTM
+1. **Speech Analysis Model** - Classifies cognitive behavior from speech transcripts and timing features using an LSTM/Transformer
+2. **Clock Drawing Test Model** - Analyzes hand-drawn clock images using a CNN
+3. **Cognitive Games Model** - Predicts MMSE scores from HRS/HCAP cognitive test scores
+
+## Results
+
+### Multimodal Fusion Performance
+
+Combining modalities improves classification performance compared with individual models. The table below summarizes AUC scores across all configurations:
+
+| Modality Configuration                       | AUC        |
+| -------------------------------------------- | ---------- |
+| Speech only                                  | 0.6021     |
+| Clock Drawing only                           | 0.6483     |
+| Games only                                   | 0.9577     |
+| Speech + Clock Drawing + Games (full fusion) | **0.9628** |
+
+Among single modalities, games achieved the strongest performance (AUC 0.9577), while clock drawing and speech alone achieved lower AUCs of 0.6483 and 0.6021 respectively. The full multimodal fusion of all three modalities achieved the highest AUC of 0.9628.
+
+### Modality Contribution Analysis
+
+Although games contributed the majority of predictive power, the addition of speech and clock drawing provided complementary information that improved overall accuracy:
+
+| Modality      | Predictive Contribution |
+| ------------- | ----------------------- |
+| Games         | 74.9%                   |
+| Clock Drawing | 15.6%                   |
+| Speech        | 9.6%                    |
+
+These findings support the hypothesis that multimodal fusion can enhance classification accuracy by integrating diverse behavioral signals such as speech patterns, drawing performance, and cognitive task outcomes. The incremental gains from including speech and clock drawing demonstrate that each modality captures a distinct and complementary dimension of cognitive function.
+
+Future work should investigate performance across larger datasets and explore whether additional signal types could further improve classification accuracy.
+
+---
 
 ## Models
 
-### 1. Speech Analysis (Wav2Vec2)
+### 1. Speech Analysis (LSTM/Transformer)
 
-Fine-tuned Wav2Vec2-XLS-R model for dementia detection from speech audio.
+An LSTM/Transformer model trained on timestamped word sequences from speech transcripts to predict MMSE scores. Speech features were evaluated using transcription text alone, timing features alone, and a combination of both. The combined input produced the highest accuracy, as pause patterns and speaking-rate signals capture cognitive changes not reflected in text alone. Synonym replacement was applied for data augmentation to improve generalization. See `train_model.ipynb` for full implementation.
 
 **Performance:**
 
 - Accuracy: ~85%
 - AUC-ROC: ~0.81
 
-**Training:**
-
-```python
-# See train_model.ipynb for full implementation
-from transformers import Wav2Vec2ForSequenceClassification
-
-# Model trained on 32-second audio clips
-# Sampling rate: 16kHz
-# Classes: [nodementia, dementia]
-```
-
-**Dataset Requirements:**
-
-- NHATS (National Health and Aging Trends Study) data
-- Audio files in WAV format
-- 16kHz sampling rate
-- ~32 seconds per clip
+**Dataset:** [DementiaBank ADReSSo](https://dementia.talkbank.org/) — speech transcripts with timestamped word sequences.
 
 ### 2. Clock Drawing Test (CNN)
 
-Convolutional neural network for scoring clock drawing tests (0-5 scale).
+A CNN trained to predict a cognitive score from 0–5 based on clock drawing images. A continuous score prediction approach proved more effective than binary classification. Images were preprocessed to remove noise and artifacts before training. See `cnn_analysis.ipynb` for full implementation.
 
 **Performance:**
 
 - Best validation accuracy: ~82%
 - Test accuracy: ~68-74%
 
-**Training:**
+**Dataset:** [NHATS](https://nhats.org/) Round 14 — clock drawing images with associated cognitive scores.
 
-```bash
-# Preprocess images
-python preprocess.py --input-folder drawings \
-                     --chasm-threshold 30 \
-                     --border-size 20 \
-                     --output-size 640
+### 3. Cognitive Games (HRS/HCAP Classifier)
 
-# Split data
-python split.py
+A classifier trained on HRS/HCAP cognitive test scores to predict MMSE, capturing memory and executive function. Labels were assigned based on MMSE threshold: scores ≤23 (impaired) and scores ≥24 (normal). See `analyze_cha.ipynb` for full implementation.
 
-# Train model (see cnn_analysis.ipynb)
-```
-
-**Dataset Structure:**
-
-```
-split/
-├── train/
-│   └── _classes.csv  # Labels: score 0-5
-├── valid/
-└── test/
-```
-
-### 3. Conversational Language (Hierarchical LSTM)
-
-Hierarchical LSTM model analyzing conversational patterns from the Pitt Cookie Theft corpus.
-
-**Training:**
-
-```python
-# See analyze_cha.ipynb for full implementation
-from train_model import AlzheimerDetectionPipeline
-
-pipeline = AlzheimerDetectionPipeline(max_utterances=20)
-results = pipeline.cross_validate(data, labels, n_splits=5)
-```
-
-**Dataset Requirements:**
-
-- Pitt Cookie Theft corpus (.cha files)
-- CHAT format transcriptions
-- Separate folders for dementia/control groups
-
-## Installation
-
-```bash
-# Clone repository
-git clone https://github.com/yourusername/cogniplay.git
-cd cogniplay
-
-# Install dependencies
-pip install torch torchvision torchaudio
-pip install transformers datasets
-pip install scikit-learn pandas numpy
-pip install gensim pillow scipy
-pip install librosa soundfile
-```
-
-## Quick Start
-
-### Speech Analysis
-
-```python
-from transformers import pipeline
-
-# Load model
-classifier = pipeline(
-    "audio-classification",
-    model="cogniplayapp/wav2vec2-large-xls-r-300m-dm32"
-)
-
-# Predict
-result = classifier("path/to/audio.wav")
-print(result)
-# [{'label': 'LABEL_1', 'score': 0.85}]  # dementia detected
-```
-
-### Clock Drawing Test
-
-```python
-import torch
-from PIL import Image
-import numpy as np
-
-# Load model
-model = torch.load('best_clock_model.pth')
-model.eval()
-
-# Preprocess image
-img = Image.open('clock_drawing.tif').convert('L')
-img_array = np.array(img.resize((320, 320)))
-img_tensor = torch.FloatTensor(img_array).unsqueeze(0).unsqueeze(0)
-
-# Predict score (0-5)
-with torch.no_grad():
-    score = model(img_tensor).argmax(1).item()
-print(f"Clock Drawing Score: {score}/5")
-```
-
-### Conversational Analysis
-
-```python
-from train_model import AlzheimerDetectionPipeline
-
-# Load and preprocess .cha files
-pipeline = AlzheimerDetectionPipeline()
-pipeline.load_word2vec()
-
-# Predict
-predictions, probabilities = pipeline.predict(conversation_data)
-```
-
-## Data Preprocessing
-
-### Audio Files
-
-```bash
-# Convert to 16kHz mono WAV
-ffmpeg -i input.mp3 -ar 16000 -ac 1 output.wav
-```
-
-### Clock Drawings
-
-```bash
-# Clean and crop drawings
-python preprocess.py --input-folder drawings \
-                     --dirt-threshold 50 \
-                     --rectangle-density 0.95
-```
-
-### CHAT Transcriptions
-
-```python
-# Extract participant utterances
-from train_model import extract_par_utterances_with_duration
-
-data = extract_par_utterances_with_duration("transcript.cha")
-```
+**Dataset:** [HRS/HCAP](https://hcap.isr.umich.edu/) — cognitive test scores used to derive MMSE predictions.
 
 ## Dataset Sources
 
-1. **NHATS**: [National Health and Aging Trends Study](https://nhats.org/)
-2. **Pitt Cookie Theft**: [DementiaBank](https://dementia.talkbank.org/)
-3. **Clock Drawings**: Custom annotated dataset (scores 0-5)
+1. **DementiaBank ADReSSo**: [dementia.talkbank.org](https://dementia.talkbank.org/)
+2. **NHATS Round 14**: [National Health and Aging Trends Study](https://nhats.org/)
+3. **HRS/HCAP**: [Health and Retirement Study / Harmonized Cognitive Assessment Protocol](https://hcap.isr.umich.edu/)
