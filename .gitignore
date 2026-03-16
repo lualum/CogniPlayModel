@@ -1,7 +1,12 @@
 .DS_Store
-images
-all_data
-venv
-Pitt
+data
+.venv
 HC22
 ADReSSo
+.ipynb_checkpoints
+test
+train
+Hc22hp_r.csv
+hc22_dd.pdf
+HCAP_columns.rtf
+data.csv
