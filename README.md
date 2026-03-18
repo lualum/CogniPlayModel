@@ -47,21 +47,11 @@ Future work should investigate performance across larger datasets and explore wh
 
 An LSTM/Transformer model trained on timestamped word sequences from speech transcripts to predict MMSE scores. Speech features were evaluated using transcription text alone, timing features alone, and a combination of both. The combined input produced the highest accuracy, as pause patterns and speaking-rate signals capture cognitive changes not reflected in text alone. Synonym replacement was applied for data augmentation to improve generalization. See `train_model.ipynb` for full implementation.
 
-**Performance:**
-
-- Accuracy: ~85%
-- AUC-ROC: ~0.81
-
 **Dataset:** [DementiaBank ADReSSo](https://dementia.talkbank.org/) — speech transcripts with timestamped word sequences.
 
 ### 2. Clock Drawing Test (CNN)
 
 A CNN trained to predict a cognitive score from 0–5 based on clock drawing images. A continuous score prediction approach proved more effective than binary classification. Images were preprocessed to remove noise and artifacts before training. See `cnn_analysis.ipynb` for full implementation.
-
-**Performance:**
-
-- Best validation accuracy: ~82%
-- Test accuracy: ~68-74%
 
 **Dataset:** [NHATS](https://nhats.org/) Round 14 — clock drawing images with associated cognitive scores.
 
