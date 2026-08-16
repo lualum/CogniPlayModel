@@ -1,0 +1,15 @@
+.DS_Store
+data
+.venv
+HC22
+ADReSSo
+.ipynb_checkpoints
+__pycache__
+.cache
+.matplotlib-cache
+test
+train
+Hc22hp_r.csv
+hc22_dd.pdf
+HCAP_columns.rtf
+data.csv

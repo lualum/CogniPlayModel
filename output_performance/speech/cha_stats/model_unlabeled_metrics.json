@@ -1,0 +1,63 @@
+{
+  "model_version": "unlabeled_kmeans_speech_baseline_v1",
+  "label_status": "No ground-truth diagnosis or MMSE labels were found; these are model diagnostics, not clinical performance metrics.",
+  "n_subjects": 71,
+  "prediction_coverage": {
+    "ad_classification": 1.0,
+    "mmse_regression": 1.0
+  },
+  "valid_prediction_rate": {
+    "ad_classification": 1.0,
+    "mmse_regression": 1.0
+  },
+  "classification": {
+    "predicted_class_counts": {
+      "0": 67,
+      "1": 4
+    },
+    "mean_ad_probability": 0.24544638915601363,
+    "mean_confidence": 0.5746908327442912,
+    "median_confidence": 0.6292415206848258,
+    "uncertain_subjects_confidence_below_0_20": 4
+  },
+  "regression": {
+    "mean_predicted_mmse": 27.054929577464783,
+    "median_predicted_mmse": 27.7,
+    "min_predicted_mmse": 18.9,
+    "max_predicted_mmse": 28.3
+  },
+  "clustering": {
+    "silhouette_score": 0.5568844508356509,
+    "high_risk_cluster": 0,
+    "low_risk_cluster": 1,
+    "pca_explained_variance_ratio": [
+      0.2695870582491226,
+      0.23566066016690926
+    ],
+    "pca_total_explained_variance": 0.5052477184160319
+  },
+  "features_used": [
+    "total_turns",
+    "recording_duration_min",
+    "speech_density",
+    "silent_gap_s",
+    "overlap_s",
+    "par_turns",
+    "inv_turns",
+    "par_speech_share",
+    "inv_speech_share",
+    "mean_turn_duration_s",
+    "median_turn_duration_s",
+    "max_turn_duration_s",
+    "mean_par_duration_s",
+    "median_par_duration_s",
+    "mean_inv_duration_s",
+    "median_inv_duration_s",
+    "mean_gap_s",
+    "median_gap_s",
+    "max_gap_s",
+    "turn_switch_rate",
+    "par_turns_per_minute",
+    "inv_turns_per_minute"
+  ]
+}

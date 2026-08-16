@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720">
+<rect width="100%" height="100%" fill="#ffffff"/>
+<style>text{font-family:Arial,Helvetica,sans-serif;fill:#1f2937}.title{font-size:30px;font-weight:700}.axis{font-size:18px}.tick{font-size:15px;fill:#4b5563}.label{font-size:14px;fill:#374151}.value{font-size:16px;fill:#111827}.bold{font-weight:700}</style>
+<text class="title" x="600.0" y="40" text-anchor="middle">AUC by Modality Configuration</text>
+<line x1="115" y1="530.0" x2="1145" y2="530.0" stroke="#d1d5db" stroke-width="1" opacity="0.65"/>
+<text class="tick" x="101" y="535.0" text-anchor="end">0.55</text>
+<line x1="115" y1="480.0" x2="1145" y2="480.0" stroke="#d1d5db" stroke-width="1" opacity="0.65"/>
+<text class="tick" x="101" y="485.0" text-anchor="end">0.60</text>
+<line x1="115" y1="430.0" x2="1145" y2="430.0" stroke="#d1d5db" stroke-width="1" opacity="0.65"/>
+<text class="tick" x="101" y="435.0" text-anchor="end">0.65</text>
+<line x1="115" y1="380.0" x2="1145" y2="380.0" stroke="#d1d5db" stroke-width="1" opacity="0.65"/>
+<text class="tick" x="101" y="385.0" text-anchor="end">0.70</text>
+<line x1="115" y1="330.0" x2="1145" y2="330.0" stroke="#d1d5db" stroke-width="1" opacity="0.65"/>
+<text class="tick" x="101" y="335.0" text-anchor="end">0.75</text>
+<line x1="115" y1="280.0" x2="1145" y2="280.0" stroke="#d1d5db" stroke-width="1" opacity="0.65"/>
+<text class="tick" x="101" y="285.0" text-anchor="end">0.80</text>
+<line x1="115" y1="230.0" x2="1145" y2="230.0" stroke="#d1d5db" stroke-width="1" opacity="0.65"/>
+<text class="tick" x="101" y="235.0" text-anchor="end">0.85</text>
+<line x1="115" y1="180.0" x2="1145" y2="180.0" stroke="#d1d5db" stroke-width="1" opacity="0.65"/>
+<text class="tick" x="101" y="185.0" text-anchor="end">0.90</text>
+<line x1="115" y1="130.0" x2="1145" y2="130.0" stroke="#d1d5db" stroke-width="1" opacity="0.65"/>
+<text class="tick" x="101" y="135.0" text-anchor="end">0.95</text>
+<line x1="115" y1="80.0" x2="1145" y2="80.0" stroke="#d1d5db" stroke-width="1" opacity="0.65"/>
+<text class="tick" x="101" y="85.0" text-anchor="end">1.00</text>
+<line x1="115" y1="80" x2="115" y2="530" stroke="#111827" stroke-width="1.5"/>
+<line x1="115" y1="530" x2="1145" y2="530" stroke="#111827" stroke-width="1.5"/>
+<text class="axis" transform="translate(35 305.0) rotate(-90)" text-anchor="middle">AUC</text>
+<rect x="115.0" y="478.0" width="124.9" height="52.0" fill="#7a869a" rx="4"/>
+<text class="value" x="177.4" y="468.0" text-anchor="middle">0.602</text>
+<text class="label" x="177.4" y="572.0" text-anchor="end" transform="rotate(-34 177.4 572.0)">Speech only</text>
+<rect x="265.9" y="432.0" width="124.9" height="98.0" fill="#7a869a" rx="4"/>
+<text class="value" x="328.3" y="422.0" text-anchor="middle">0.648</text>
+<text class="label" x="328.3" y="572.0" text-anchor="end" transform="rotate(-34 328.3 572.0)">Clock Drawing only</text>
+<rect x="416.7" y="122.0" width="124.9" height="408.0" fill="#2f80ed" rx="4"/>
+<text class="value" x="479.1" y="112.0" text-anchor="middle">0.958</text>
+<text class="label" x="479.1" y="572.0" text-anchor="end" transform="rotate(-34 479.1 572.0)">Cognitive Task only</text>
+<rect x="567.6" y="408.0" width="124.9" height="122.0" fill="#7a869a" rx="4"/>
+<text class="value" x="630.0" y="398.0" text-anchor="middle">0.672</text>
+<text class="label" x="630.0" y="572.0" text-anchor="end" transform="rotate(-34 630.0 572.0)">Speech + Clock Drawing</text>
+<rect x="718.4" y="121.0" width="124.9" height="409.0" fill="#2f80ed" rx="4"/>
+<text class="value" x="780.9" y="111.0" text-anchor="middle">0.959</text>
+<text class="label" x="780.9" y="572.0" text-anchor="end" transform="rotate(-34 780.9 572.0)">Speech + Cognitive Task</text>
+<rect x="869.3" y="119.0" width="124.9" height="411.0" fill="#2f80ed" rx="4"/>
+<text class="value" x="931.7" y="109.0" text-anchor="middle">0.961</text>
+<text class="label" x="931.7" y="572.0" text-anchor="end" transform="rotate(-34 931.7 572.0)">Clock Drawing + Cognitive Task</text>
+<rect x="1020.1" y="117.2" width="124.9" height="412.8" fill="#1f7a4d" rx="4"/>
+<text class="value bold" x="1082.6" y="107.2" text-anchor="middle">0.9628</text>
+<g transform="translate(1082.6 572.0) rotate(-34)">
+<text class="label" text-anchor="end"><tspan x="0" dy="0">Speech + Clock Drawing + Cognitive Task</tspan><tspan x="0" dy="18">(full fusion)</tspan></text></g>
+</svg>
