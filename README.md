@@ -10,6 +10,7 @@ This repository contains three independent classification models:
 2. **Clock Drawing Test Model** - Analyzes hand-drawn clock images using a CNN
 3. **Cognitive Games Model** - Predicts MMSE scores from HRS/HCAP cognitive test scores
 
+
 ## Repository Structure
 
 The project is organized by pipeline stage, with modality-specific files inside each stage:
@@ -30,6 +31,7 @@ The project is organized by pipeline stage, with modality-specific files inside 
 | Split cropped clock drawings into train/valid/test | `python dataset/clock_drawings/create_dataset.py` |
 | Train clock drawing CNNs | `model/clock_drawings/cnn_analysis_0to1.ipynb`, `model/clock_drawings/cnn_analysis_0to5.ipynb` |
 | Run multimodal fusion simulation | `python model/fusion/multimodal_fusion_bayes.py` |
+
 
 ## Results
 
@@ -66,19 +68,25 @@ Future work should investigate performance across larger datasets and explore wh
 
 ### 1. Speech Analysis (LSTM/Transformer)
 
+
 An LSTM/Transformer model trained on timestamped word sequences from speech transcripts to predict MMSE scores. Speech features were evaluated using transcription text alone, timing features alone, and a combination of both. The combined input produced the highest accuracy, as pause patterns and speaking-rate signals capture cognitive changes not reflected in text alone. Synonym replacement was applied for data augmentation to improve generalization. See `model/speech/DementiaMLModel.ipynb` and `model/speech/train_speech_model.py` for implementation.
+
 
 **Dataset:** [DementiaBank ADReSSo](https://dementia.talkbank.org/) — speech transcripts with timestamped word sequences.
 
 ### 2. Clock Drawing Test (CNN)
 
+
 A CNN trained to predict a cognitive score from 0–5 based on clock drawing images. A continuous score prediction approach proved more effective than binary classification. Images are preprocessed to remove noise and artifacts before training. See `model/clock_drawings/` for the CNN notebooks and `preprocessing/clock_drawings/` for image cleanup notebooks.
+
 
 **Dataset:** [NHATS](https://nhats.org/) Round 14 — clock drawing images with associated cognitive scores.
 
 ### 3. Cognitive Games (HRS/HCAP Classifier)
 
+
 A classifier trained on HRS/HCAP cognitive test scores to predict MMSE, capturing memory and executive function. Labels were assigned based on MMSE threshold: scores ≤23 (impaired) and scores ≥24 (normal). See `model/games/DementiaMLModel.ipynb` for implementation.
+
 
 **Dataset:** [HRS/HCAP](https://hcap.isr.umich.edu/) — cognitive test scores used to derive MMSE predictions.
 
