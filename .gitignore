@@ -8,7 +8,9 @@ __pycache__/
 
 # Large/local datasets
 data/
-ADReSSo/
+ClockData
+ClockData_256
+Pitt/
 HC22/
 HCAP/
 test/
@@ -17,3 +19,6 @@ Hc22hp_r.csv
 hc22_dd.pdf
 HCAP_columns.rtf
 data.csv
+
+# Output Files
+output_performance/
